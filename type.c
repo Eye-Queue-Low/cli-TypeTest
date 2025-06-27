@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
 
     srand((unsigned int)time(NULL));
 
-    const char* filename = "words.txt";
+    const char* filename = "~/V/P/cli-TypeTest/words.txt";
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
         fprintf(stderr, "Error: unable to load file\n");
