@@ -1,43 +1,41 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-int main(int argc, char*argv[]) {
-
+int main(int argc, char *argv[]) {
     if (argc < 3) {
-        printf("Error: not enough arguments", stderr);
+        fprintf(stderr, "Error: not enough arguments\n");
         return 1;
     }
 
-    const int p_size = atoi(argv[1]);
-    const int m_c_w = atoi(argv[2]);
+    char *endptr;
+    long p_size = strtol(argv[1], &endptr, 10);
+    long m_c_w = strtol(argv[2], &endptr, 10);
 
-    if (p_size == 0 && argv[1][0] != '0') {
-        printf("Error: '%s' is not a valid integer\n", argv[1]), stderr;
+    if (*endptr != '\0' || p_size == LONG_MIN || p_size == LONG_MAX || m_c_w == LONG_MIN || m_c_w == LONG_MAX) {
+        fprintf(stderr, "Error: '%s' and '%s' must be valid integers\n", argv[1], argv[2]);
         return 1;
     }
 
-    if (m_c_w == 0 && argv[2][0] != '0') {
-        printf("Error: '%s' is not a vaild integer\n", argv[2], stderr);
+    if (p_size <= 0 || m_c_w <= 0) {
+        fprintf(stderr, "Error: both arguments must be positive integers\n");
         return 1;
     }
 
-    const int para_size = atoi(argv[1]);
-    const int most_complex_word = atoi(argv[2]);
+    const int para_size = (int)p_size;
+    const int most_complex_word = (int)m_c_w;
 
     srand((unsigned int)time(NULL));
 
-    const char* filename = "words.txt";
-    FILE* file = fopen(filename, "r");
+    const char *filename = "words.txt";
+    FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        printf("Error: unable to load file", stderr);
+        fprintf(stderr, "Error: unable to load file\n");
         return 1;
     }
 
     char words[1000][15];
-
     int i = 0;
     int j = 0;
     char ch;
@@ -51,14 +49,12 @@ int main(int argc, char*argv[]) {
             j++;
         }
     }
-
     fclose(file);
 
     // making paragraph
     char paragraph[para_size][15];
     for (int a = 0; a < para_size; a++) {
         int rd_num = rand() % most_complex_word;
-        // paragraph[a] = words[rd_num];
         strcpy(paragraph[a], words[rd_num]);
     }
 
@@ -76,7 +72,7 @@ int main(int argc, char*argv[]) {
 
     char test[para_size][15];
     for (int a = 0; a < para_size; a++) {
-        scanf("%15s", test[a]);
+        scanf("%14s", test[a]);
     }
 
     end_time = time(NULL);
@@ -94,8 +90,7 @@ int main(int argc, char*argv[]) {
     }
     int accuracy = (words_correct * 100) / para_size;
 
-    printf("Words per Minute:%d,\nAccuracy:%d\n", wpm, accuracy);
-
+    printf("Words per Minute: %d\nAccuracy: %d%%\n", wpm, accuracy);
 
     return 0;
 }
