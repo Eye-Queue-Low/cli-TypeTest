@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,18 +9,10 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-<<<<<<< HEAD
-    const int p_size = atoi(argv[1]);
-    const int m_c_w = atoi(argv[2]);
-
-    if (p_size == 0 && argv[1][0] != '0') {
-        printf("Error: '%s' is not a valid integer\n", argv[1], stderr);
-=======
     char *endptr;
     const int p_size = strtol(argv[1], &endptr, 10);
     if (*endptr != '\0' || p_size <= 0) {
         fprintf(stderr, "Error: '%s' is not a valid positive integer\n", argv[1]);
->>>>>>> ai-sug
         return 1;
     }
 
@@ -60,17 +51,8 @@ int main(int argc, char* argv[]) {
         strcpy(paragraph[a], words[rd_num]);
     }
 
-<<<<<<< HEAD
-    // output paragraph
-    for (int a = 0; a < para_size; a++) {
-        if (a % 25 == 0) {
-            printf("\n");
-        }
-
-=======
     // Output paragraph
     for (int a = 0; a < p_size; a++) {
->>>>>>> ai-sug
         printf("%s ", paragraph[a]);
         if ((a + 1) % 25 == 0) {
             printf("\n");
