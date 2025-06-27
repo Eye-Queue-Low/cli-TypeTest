@@ -15,7 +15,7 @@ int main(int argc, char*argv[]) {
     const int m_c_w = atoi(argv[2]);
 
     if (p_size == 0 && argv[1][0] != '0') {
-        printf("Error: '%s' is not a valid integer\n", argv[1]), stderr;
+        printf("Error: '%s' is not a valid integer\n", argv[1], stderr);
         return 1;
     }
 
@@ -64,9 +64,13 @@ int main(int argc, char*argv[]) {
 
     // output paragraph
     for (int a = 0; a < para_size; a++) {
+        if (a % 25 == 0) {
+            printf("\n");
+        }
+
         printf("%s ", paragraph[a]);
     }
-    printf("\n");
+    printf("\n-----------------------------------------------------------------------------------------\n");
 
     // get input
     time_t start_time, end_time;
